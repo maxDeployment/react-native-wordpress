@@ -1,13 +1,23 @@
 import React from 'react';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, Pressable} from 'react-native';
 
 import {sizes} from '../../resources/constanst';
 import logo from '../../asset/images/headers/logo.png';
 import cartBtnIcon from '../../asset/images/headers/cart-icon.png';
+import goBackBtn from '../../asset/images/headers/go-back-icon.png';
 
-const Header = () => {
+const Header = props => {
+  const {route, navigation} = props;
+  //Condicion para no mostrar el boton de volver atrás si estamos en la pantalla principal
+  const isProductsScreen = route.name === 'Products';
+
   return (
     <View style={styles.container}>
+      {!isProductsScreen && (
+        <Pressable onPress={() => navigation.goBack()}>
+          <Image style={styles.arrowIcon} source={goBackBtn} />
+        </Pressable>
+      )}
       <Image style={styles.logo} source={logo} />
       <Image style={styles.cartBtnIcon} source={cartBtnIcon} />
     </View>
